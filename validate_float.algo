@@ -6,15 +6,40 @@ BEGIN
     WHILE (c <> '#' AND state <> 5) DO
         Read(c);
         SWITCH (c) DO
-            case 0 : IF (c = ' ') THEN
-                    state := 0; BREAK;
-                ELSE_IF (isDigit(c)) THEN
-                    state := 4; BREAK;
-                ELSE
-                    state := 5; BREAK;
-                END_IF
-            case value : set_instructions
-            default : set_instructions
+            case 0 :IF (c = ' ') THEN
+                        state := 0; BREAK;
+                    ELSE_IF (isDigit(c)) THEN
+                        state := 1; BREAK;
+                    ELSE
+                        state := 5; BREAK;
+                    END_IF
+            case 1 :IF (c = '.') THEN
+                        state := 2; BREAK;
+                    ELSE_IF (isDigit(c)) THEN
+                        state := 1; BREAK;
+                    ELSE_IF (c= '#') THEN
+                        state := 4; BREAK;
+                    ELSE
+                        state := 5; BREAK;
+                    END_IF
+            case 2 :IF (isDigit(c)) THEN
+                        state := 3; BREAK;
+                    ELSE
+                        state := 5; BREAK;
+                    END_IF
+            case 3 : IF (c = '#') THEN
+                        state := 4; BREAK;
+                    ELSE_IF (isDigit(c)) THEN
+                        state := 3; BREAK;
+                    ELSE
+                        state := 5; BREAK;
+                    END_IF
         END_SWITCH
     END_WHILE
+
+    IF (state = 4) THEN
+        Write("A valid expression");
+    ELSE
+        Write("Not a valid expression");
+    END_IF
 END
