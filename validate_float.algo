@@ -31,6 +31,18 @@ BEGIN
                         state := 4; BREAK;
                     ELSE_IF (isDigit(c)) THEN
                         state := 3; BREAK;
+                    // update to accept blanks in the end
+                    ELSE_IF (c = ' ') THEN
+                        state := 6; BREAK;
+                    ELSE
+                        state := 5; BREAK;
+                    END_IF
+            // update to accept blanks in the end add a new state
+            // to accept only blanks in it.
+            case 6 : IF (c = '#') THEN
+                        state := 4; BREAK;
+                    ELSE_IF (c = ' ') THEN
+                        state := 6; BREAK;
                     ELSE
                         state := 5; BREAK;
                     END_IF
