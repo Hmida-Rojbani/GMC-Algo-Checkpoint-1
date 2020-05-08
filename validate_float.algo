@@ -2,35 +2,39 @@ ALGORITHM validate_float
 VAR
     state : INTEGER := 0 ; // present the state in the autumate
     c : CHAR := ''; // will hold the character we read
+    // update 3 to hold each part of the number if the expression is validate
+    int_part : INTEGER := 0;
+    dec_part : INTEGER := 0;
+
 BEGIN
     WHILE (c <> '#' AND state <> 5) DO
         Read(c);
         SWITCH (c) DO
             case 0 :IF (c = ' ') THEN
                         state := 0; BREAK;
-                    ELSE_IF (isDigit(c)) THEN
-                        state := 1; BREAK;
+                    ELSE_IF (isDigit(c)) THEN //update task 3
+                        state := 1; int_part:= ToInteger(c); BREAK;
                     ELSE
                         state := 5; BREAK;
                     END_IF
             case 1 :IF (c = '.') THEN
                         state := 2; BREAK;
-                    ELSE_IF (isDigit(c)) THEN
-                        state := 1; BREAK;
+                    ELSE_IF (isDigit(c)) THEN //update task 3
+                        state := 1; int_part:= int_part*10 + ToInteger(c); BREAK;
                     ELSE_IF (c= '#') THEN
                         state := 4; BREAK;
                     ELSE
                         state := 5; BREAK;
                     END_IF
-            case 2 :IF (isDigit(c)) THEN
-                        state := 3; BREAK;
+            case 2 :IF (isDigit(c)) THEN //update task 3
+                        state := 3; dec_part:= ToInteger(c); BREAK;
                     ELSE
                         state := 5; BREAK;
                     END_IF
             case 3 : IF (c = '#') THEN
                         state := 4; BREAK;
-                    ELSE_IF (isDigit(c)) THEN
-                        state := 3; BREAK;
+                    ELSE_IF (isDigit(c)) THEN //update task 3
+                        state := 3; dec_part:= dec_part*10 + ToInteger(c); BREAK;
                     // update to accept blanks in the end
                     ELSE_IF (c = ' ') THEN
                         state := 6; BREAK;
@@ -51,6 +55,9 @@ BEGIN
 
     IF (state = 4) THEN
         Write("A valid expression");
+        //update task3;
+        Write("integer part is : ",int_part);
+        Write("decimal part is : ",dec_part);
     ELSE
         Write("Not a valid expression");
     END_IF
