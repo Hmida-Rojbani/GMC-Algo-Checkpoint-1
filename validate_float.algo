@@ -1,0 +1,20 @@
+ALGORITHM validate_float
+VAR
+    state : INTEGER := 0 ; // present the state in the autumate
+    c : CHAR := ''; // will hold the character we read
+BEGIN
+    WHILE (c <> '#' AND state <> 5) DO
+        Read(c);
+        SWITCH (c) DO
+            case 0 : IF (c = ' ') THEN
+                    state := 0; BREAK;
+                ELSE_IF (isDigit(c)) THEN
+                    state := 4; BREAK;
+                ELSE
+                    state := 5; BREAK;
+                END_IF
+            case value : set_instructions
+            default : set_instructions
+        END_SWITCH
+    END_WHILE
+END
